@@ -106,7 +106,8 @@ class _AlphaSliderState extends State<AlphaSlider>
           child: CupertinoSlider(
             min: 0,
             max: 255,
-            thumbColor: Color.fromARGB(255, 255, 255, 255),
+            thumbColor: widget.color.computeLuminance() > .5 ? Colors.black : Colors.white,
+            activeColor: widget.color.computeLuminance() > .5 ? Colors.black : Colors.white,
             // activeColor: widget.activeColor.withOpacity(.5),
             value: _animation.value.toDouble(),
             onChanged: (value) => widget.onChanged(value.toInt()),
