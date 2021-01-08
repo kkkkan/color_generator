@@ -1,7 +1,10 @@
 import 'package:color_generator/screens/home/widgets/color_slider.dart';
+import 'package:color_generator/screens/home/widgets/alpha_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:color_generator/cubit/color_cubit.dart';
+
+import 'dart:developer';
 
 class ColorSliders extends StatelessWidget {
   @override
@@ -42,6 +45,18 @@ class ColorSliders extends StatelessWidget {
               value: _color.blue,
               onChanged: (value) {
                 context.read<ColorCubit>().updateBlue(value);
+              },
+            ),
+          ),
+          Expanded(
+            child: AlphaSlider(
+              color: _color,
+              // colorName: 'Red',
+              // activeColor: Colors.red,
+              colorName: 'Alpha',
+              value: _color.alpha,
+              onChanged: (value) {
+                context.read<ColorCubit>().updateAlpha(value);
               },
             ),
           ),

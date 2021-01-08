@@ -1,28 +1,32 @@
 import 'package:color_generator/screens/home/widgets/color_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer';
 
-class ColorSlider extends StatefulWidget {
+
+class AlphaSlider extends StatefulWidget {
   final String colorName;
-  final Color color; // 背景色の輝度から文字色を決めるためだけに使っている
+  final Color color;
   final int value;
-  final Color activeColor;// スライダーが選ばれている時の色
+  final int alpha;
+  // final Color activeColor;
   final Function(int value) onChanged;
 
-  const ColorSlider({
+  const AlphaSlider({
     Key key,
     this.color,
     this.colorName,
     this.value,
-    this.activeColor,
+    this.alpha,
+    // this.activeColor,
     this.onChanged,
   }) : super(key: key);
 
   @override
-  _ColorSliderState createState() => _ColorSliderState();
+  _AlphaSliderState createState() => _AlphaSliderState();
 }
 
-class _ColorSliderState extends State<ColorSlider>
+class _AlphaSliderState extends State<AlphaSlider>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   Animation<int> _animation;
@@ -57,7 +61,7 @@ class _ColorSliderState extends State<ColorSlider>
   }
 
   @override
-  void didUpdateWidget(covariant ColorSlider oldWidget) {
+  void didUpdateWidget(covariant AlphaSlider oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.value != widget.value) {
@@ -84,7 +88,7 @@ class _ColorSliderState extends State<ColorSlider>
             color: Colors.black.withOpacity(.075),
           ),
           child: Text(
-            widget.colorName[0], // 一文字目。配列という意味ではない。
+            widget.colorName[0],
             style: TextStyle(
               color: contrastColor.withOpacity(.4),
               fontWeight: FontWeight.bold,
@@ -102,8 +106,8 @@ class _ColorSliderState extends State<ColorSlider>
           child: CupertinoSlider(
             min: 0,
             max: 255,
-            thumbColor: widget.activeColor,
-            activeColor: widget.activeColor.withOpacity(.5),
+            thumbColor: Color.fromARGB(255, 255, 255, 255),
+            // activeColor: widget.activeColor.withOpacity(.5),
             value: _animation.value.toDouble(),
             onChanged: (value) => widget.onChanged(value.toInt()),
           ),
@@ -112,6 +116,6 @@ class _ColorSliderState extends State<ColorSlider>
     );
   }
 
-  Color get contrastColor =>//Colors.black;
+  Color get contrastColor =>
       widget.color.computeLuminance() > .5 ? Colors.black : Colors.white;
 }

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:color_generator/services/coolor.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'dart:developer' as D;
 
 part 'color_state.dart';
 part 'color_cubit.freezed.dart';
@@ -31,6 +32,11 @@ class ColorCubit extends Cubit<ColorState> {
     updateColor(_color);
   }
 
+  updateAlpha(int alpha){
+    final _color = state.color.withAlpha(alpha);
+    updateColor(_color);
+    
+  }
   updateHexadecimal(String hexadecimal) {
     final _color = coolor.fromHexadecimal(hexadecimal);
 
@@ -43,13 +49,15 @@ class ColorCubit extends Cubit<ColorState> {
     final _red = _random.nextInt(255);
     final _green = _random.nextInt(255);
     final _blue = _random.nextInt(255);
+    final _alpha = _random.nextInt(255);
 
-    final _color = coolor.fromRGB(_red, _green, _blue);
+    final _color = coolor.fromARGB(_alpha,_red, _green, _blue);
 
     updateColor(_color);
   }
 
   updateColor(Color color) {
+    D.log("update color "+(color.toString()));
     emit(ColorState.color(color));
   }
 }

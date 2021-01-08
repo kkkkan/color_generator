@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
+import 'dart:developer';
 
 class Coolor implements ICoolor {
   @override
@@ -28,22 +29,24 @@ class Coolor implements ICoolor {
       _hexadecimal = _hexadecimal.replaceAll('#', '');
     }
 
-    final _intColor = int.parse('0xFF$_hexadecimal');
+    log('color 0x$_hexadecimal');
+    final _intColor = int.parse('0x$_hexadecimal');
 
     final _color = Color(_intColor);
 
+    log(_color.toString());
     return _color;
   }
 
   @override
-  Color fromRGB(int red, int green, int blue) {
-    return Color.fromARGB(1, red, green, blue);
+  Color fromARGB(int alpha,int red, int green, int blue) {
+    return Color.fromARGB(alpha, red, green, blue);
   }
 }
 
 abstract class ICoolor {
   Color complementary(Color color);
   Color fromHSL(double alpha, double hue, double saturation, double lightness);
-  Color fromRGB(int red, int green, int blue);
+  Color fromARGB(int alpha,int red, int green, int blue);
   Color fromHexadecimal(String hexadecimal);
 }

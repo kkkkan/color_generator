@@ -12,25 +12,26 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
+        FocusScope.of(context).requestFocus(FocusNode()); // Dartはnewを省略してもよい
       },
       child: Scaffold(
         body: Stack(
           children: [
             ColorPreview(),
             SafeArea(
-              child: Align(
+              child: Align( // 子widgeの位置を揃える
                 alignment: Alignment.bottomCenter,
-                child: SingleChildScrollView(
+                child: SingleChildScrollView( // 大きくなりすぎたら勝手にスクロールviewになってくれる
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 60),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        BlocBuilder<ColorCubit, ColorState>(
-                          builder: (context, state) {
+                        BlocBuilder<ColorCubit, ColorState>( // blocの状態が変わったら再ビルドする.どのblocを見るかは、親widgetがcreatで渡してくれているはず
+                          builder: (context, state) { // stateとしてColorStateが来るはず
                             return HexadecimalColorTextField(
-                              color: state.color,
+                              key: Key("id1"),// widgetにつけるid的なもの。省力可。(その時はnullになる)
+                              color: state.color,//state.color,
                               onChanged: (String hexadecimal) {
                                 context
                                     .read<ColorCubit>()
